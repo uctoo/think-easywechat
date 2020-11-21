@@ -15,7 +15,7 @@
 ## 安装
 ### Composer安装
 ~~~
-composer require uctoo/think-easywechat 
+composer require uctoo/think-easywechat:dev-master
 ~~~
 ### Git安装
 https://github.com/uctoo/think-easywechat
