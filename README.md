@@ -13,11 +13,11 @@ easywechat SDK for ThinkPHP5.0
 4.  TP5.0不支持middleware,中间件暂无更优雅的替代方案, 可以使用Hook 机制将具体实现的业务逻辑分发到各个模块
 
 ## 安装
-###Composer安装
+### Composer安装
 ~~~
 composer require uctoo/think-easywechat 
 ~~~
-###Git安装
+### Git安装
 https://github.com/uctoo/think-easywechat
 或
 https://gitee.com/UCT/think-easywechat
