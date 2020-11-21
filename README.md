@@ -161,6 +161,10 @@ Hook::add('text_auto_reply','app\\wechatopen\\behavior\\CustomSendAutoReply');
 
 ```php
 <?php
+namespace app\wechatopen\behavior;
+
+use uctoo\ThinkEasyWeChat\Facade;
+
 class CustomSendAutoReply
 {
     /**
