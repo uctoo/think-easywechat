@@ -8,7 +8,7 @@
 软件架构说明
 
 1.  ThinkPHP 5.0.*没有container和facade，因此需增加相关依赖
-2.  使用了facade模式, TP5.0不支持, 需要手动将TP5.1的think\Facade.php文件拷贝到 thinkphp\library\think 目录下,facade.php无其他依赖
+2.  使用了facade模式, TP5.0不支持, composer安装已自动复制, 如未生效, 需要手动将TP5.1的think\Facade.php文件拷贝到 thinkphp\library\think 目录下,facade.php无其他依赖
 3.  由于TP5.0不支持容器, TP5.1的容器有一定耦合度不利于升级, 因此采用了illuminate/container
 4.  TP5.0不支持middleware,中间件暂无更优雅的替代方案, 可以使用Hook 机制将具体实现的业务逻辑分发到各个模块
 
