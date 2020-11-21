@@ -1,0 +1,33 @@
+{
+    "name": "uctoo/think-easywechat",
+    "description": "EasyWechat4 For Thnkphp5.0+",
+    "type": "think-extend",
+    "keywords": ["wechat", "weixin","easywechat","thinkphp","think", "sdk"],
+    "require": {
+        "overtrue/wechat": "~4.0",
+        "topthink/framework": "~5.0",
+        "psr/simple-cache": "^1.0",
+        "illuminate/container": "^8.15"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "patrick",
+            "email": "contact@uctoo.com",
+            "homepage": "https://www.uctoo.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "uctoo\\ThinkEasyWeChat\\": "src/"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "extra": {
+        "think-config": {
+          "wechat": "src/config.php"
+        }
+      }
+}
