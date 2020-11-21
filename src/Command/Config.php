@@ -39,12 +39,12 @@ class Config extends Command
         $fileContent = file_get_contents(VENDOR_PATH . 'uctoo/think-easywechat/src/config.php');
         file_put_contents(CONF_PATH . 'wechat.php', $fileContent);
 
-        if (file_exists(LIB_PATH  . '/think/Facade.php')) {
+        if (file_exists(LIB_PATH  . 'think/Facade.php')) {
             $output->error('file is exist');
             return;
         }
         $fileContent = file_get_contents(VENDOR_PATH . 'uctoo/think-easywechat/src/Library/think/Facade.php');
-        file_put_contents(LIB_PATH . '/think/Facade.php', $fileContent);
+        file_put_contents(LIB_PATH . 'think/Facade.php', $fileContent);
 
         $output->info('send success');
         return;
