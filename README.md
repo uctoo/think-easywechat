@@ -184,7 +184,109 @@ class CustomSendAutoReply
     }
 }
 ```
-更多 SDK 的具体使用请参考：https://easywechat.com
+## 开发说明
+
+1.  建议基于TP5.0和easywechat的项目采用uctoo/think-easywechat进行重构, 重构方式非常简单, 仅需替换获取easywechat SDK实例的代码即可, 理论上其他代码无需改动,以fastadmin官方微信管理插件为例
+  菜单管理功能 app\admin\controller\wechat\Menu
+```php
+<?php
+use uctoo\ThinkEasyWeChat\Facade;
+
+$app = Facade::officialAccount('',Config::load());   //注意帐号配置信息传第二个参数
+```
+2.  所有主动接口, 即通过应用服务器向微信服务器发送请求的, 都可以在业务实现点参考1 进行重构。所有被动响应接口, 即微信服务器向应用服务器推送消息的,
+ 包括单独开发模式的 服务器地址(URL), 第三方开发模式的 授权事件接收URL和 消息与事件接收URL 都有中心化的入口, 建议采用easywechat的EventHandler机制
+ 结合ThinkPHP的Hook机制, 分发到个业务实现点进行重构, 解耦各模块, 支持各模块实现微信开发的功能互不冲突, 可以商业化分发。以fastadmin官方微信管理插件为例
+ 
+ 微信接口 addons\wechat\controller\index
+```php
+ <?php
+use uctoo\ThinkEasyWeChat\Facade;
+
+/**
+ * 微信接口
+ */
+class Index extends \think\addons\Controller
+{
+    public $app = null;
+
+    public function _initialize()
+    {
+        parent::_initialize();
+        $this->app = Facade::officialAccount('',Config::load());  // 公众号
+        Hook::add('text_auto_reply','app\\admin\\eventhandler\\wechat\\CustomSendAutoReply');        //注册具体业务处理的模块
+        Hook::add('subscribemsg','app\\admin\\eventhandler\\wechat\\CustomSendAutoReply');
+    }
+    
+        /**
+         * 微信API对接接口
+         */
+        public function api()
+        {
+            //.....
+            //自动回复处理
+            $res =  Hook::listen("text_auto_reply", $message);         //实现点监听消息，将处理逻辑分发到具体业务实现模块
+            $res =  Hook::listen("subscribemsg", $message);
+            return $res[0];
+        }
+}
+```
+ 在app\admin\eventhandler\wechat\CustomSendAutoReply类中具体实现功能
+```php
+ <?php
+class CustomSendAutoReply
+{
+    /**
+     * 用户进入默认发图片
+     * @access public
+     */
+    public function textAutoReply($message)
+    {
+        $matches = null;
+          $wechatService = new WechatService;
+          $unknownMessage = WechatConfig::getValue('default.unknown.message');
+          $unknownMessage = $unknownMessage ? $unknownMessage : "";
+          //自动回复处理
+         if ($message['MsgType'] == 'text') {
+              $autoreply = null;
+              $autoreplyList = WechatAutoreply::where('status', 'normal')->cache(true)->order('weigh DESC,id DESC')->select();
+              foreach ($autoreplyList as $index => $item) {
+                  //完全匹配和正则匹配
+                  if ($item['text'] == $message['Content'] || (in_array(mb_substr($item['text'], 0, 1), ['#', '~', '/']) && preg_match($item['text'], $message['Content'], $matches))) {
+                      $autoreply = $item;
+                      break;
+                  }
+              }
+              if ($autoreply) {
+                  $wechatResponse = WechatResponse::where(["eventkey" => $autoreply['eventkey'], 'status' => 'normal'])->find();
+                  if ($wechatResponse) {
+                      $responseContent = (array)json_decode($wechatResponse['content'], true);
+                      $wechatContext = WechatContext::where(['openid' => $message['FromUserName']])->order('id', 'desc')->find();
+                      $result = $wechatService->response($this, $message['FromUserName'], $message['Content'], $responseContent, $wechatContext, $matches);
+                      if ($result) {
+                          return $result;
+                      }
+                  }
+              }
+          }
+          return $unknownMessage;
+    }
+
+    /**
+     * 用户关注默认发消息
+     * @access public
+     */
+    public function subscribemsg()
+    {
+    }
+}
+
+``` 
+  这样可以将消息响应的中控服务器逻辑代码开源，需要实现业务的模块在开源代码中注册入口，在各自商业化模块中实现具体功能。
+
+3.  建议采用微信第三方平台方式进行微信相关功能开发，好处很多。
+
+ 更多 SDK 的具体使用请参考：https://easywechat.com
 
 ## 参考项目
 - [overtrue/laravel-wechat](https://raw.githubusercontent.com/overtrue/laravel-wechat)
