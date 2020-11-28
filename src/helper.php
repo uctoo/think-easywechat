@@ -12,5 +12,5 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
-//加入Hook
-\think\Hook::add('app_init', uctoo\ThinkEasyWeChat\behavior\AppInit::class);
+//加入Hook,如需启动时以配置文件的内容，自动初始化SDK可以将以下语句取消注释
+// \think\Hook::add('app_init', 'app\\common\\behavior\\AppInit');

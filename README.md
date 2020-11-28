@@ -28,6 +28,8 @@ https://gitee.com/UCT/think-easywechat
 
 2. 每个模块基本都支持多账号，默认为 default。
 
+3. 如需应用启动时自动加载SDK，建议将Behavior\AppInit.php拷贝到application\common\behavior目录下，根据各自应用系统的情况初始化SDK
+
 ## 使用
 ### 接受普通消息
 新建一个Controller，我这边用的是Official
