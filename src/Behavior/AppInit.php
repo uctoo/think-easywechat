@@ -54,7 +54,7 @@ class AppInit
                     //合并配置文件
                     $account_config = array_merge($module_default, $wechat_default, Container::getInstance()->getBindings());
                     $account_app = Container::getInstance()->make($app, ['config' => $account_config]);
-                    if (config('wechat.default.use_tp_cache')) {
+                    if ($wechat_default['use_tp_cache']) {
                         $account_app['cache'] = Container::getInstance()->make(CacheBridge::class);
                     }
                     return $account_app;
