@@ -3,7 +3,7 @@
   微信SDK For ThinkPHP 5.0+ 基于[overtrue/wechat](https://github.com/overtrue/wechat)
   easywechat SDK for ThinkPHP5.0
   由于easywechat 4参考Laravel的框架风格，缺少集成ThinkPHP 5.0.*版本比较优雅的方式，还有很多基于ThinkPHP 5.0的系统有微信开发需求，因此开发此SDK供legacy system使用
-
+  增加小程序云开发、微信支付服务商等接口
 ## 软件架构
 软件架构说明
 
