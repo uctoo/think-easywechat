@@ -295,8 +295,7 @@ class CustomSendAutoReply
 - [niaoxiaoxin/think-wechat](https://raw.githubusercontent.com/overtrue/laravel-wechat)
 
 ## 交流群
-QQ群：102324323，使用疑问，开发，贡献代码请加群。
-
+QQ群：102324323(已满)，138048128，使用疑问，开发，贡献代码请加群。
 ## 建议
 近年微信生态已增加了很多新的能力，而且自2015年微信推出微信开放平台第三方开发方式以来，第三方开发方式逐渐流行，特别2017年小程序发布以来，第三方平台成为小程序的主要服务提供方式，建议采用第三方平台方式进行开发。
 
