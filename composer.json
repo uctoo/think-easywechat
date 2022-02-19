@@ -1,6 +1,6 @@
 {
     "name": "uctoo/think-easywechat",
-    "description": "EasyWechat4 For Thnkphp6.0+",
+    "description": "EasyWechat5 For Thnkphp6.0+",
     "type": "think-extend",
     "keywords": ["wechat", "weixin","easywechat","thinkphp","think", "sdk"],
     "require": {
